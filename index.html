@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Calculadora — Maria’s Professional Cleaning</title>
+<title>Maria’s Professional Cleaning — Calculadora</title>
 
 <style>
     :root{
-        --brand:#8B0000;
-        --brand-light:#A31A1A;
-        --bg:#F9F5F1;
-        --card:#ffffff;
+        --brand:#2D9CDB;        /* azul limpieza */
+        --brand-dark:#1B6FA8;   /* azul profesional */
+        --bg:#F2F6F9;           /* fondo limpio */
+        --card:#FFFFFF;
         --text:#1A1A1A;
-        --subtext:#555;
-        --border:#E5E5E5;
+        --subtext:#4A5568;
+        --border:#D9E4EC;
         --radius:12px;
-        --shadow:0 8px 24px rgba(0,0,0,0.07);
+        --shadow:0 8px 24px rgba(0,0,0,0.06);
     }
 
     body{
@@ -28,7 +28,7 @@
 
     .wrap{
         max-width:480px;
-        margin:30px auto;
+        margin:32px auto;
         padding:16px;
     }
 
@@ -40,14 +40,15 @@
     }
 
     .logo-icon{
-        width:58px;height:58px;
-        background:var(--brand);
+        width:58px;
+        height:58px;
         border-radius:14px;
+        background:var(--brand);
         color:#fff;
-        font-weight:800;
         display:flex;
         justify-content:center;
         align-items:center;
+        font-weight:800;
         font-size:20px;
         box-shadow:var(--shadow);
     }
@@ -56,7 +57,7 @@
         margin:0;
         font-size:20px;
         font-weight:800;
-        color:var(--brand);
+        color:var(--brand-dark);
     }
 
     .card{
@@ -77,11 +78,12 @@
         flex:1;
         padding:10px;
         text-align:center;
-        border-radius:8px;
+        border-radius:10px;
         border:1px solid var(--border);
         cursor:pointer;
         font-weight:700;
         background:#fff;
+        color:var(--subtext);
     }
 
     .tab.active{
@@ -104,6 +106,7 @@
         border-radius:8px;
         border:1px solid var(--border);
         font-size:15px;
+        background:#fff;
     }
 
     .service-row{
@@ -121,7 +124,8 @@
         border:1px solid var(--border);
         background:#fff;
         cursor:pointer;
-        font-weight:700;
+        font-weight:800;
+        color:var(--subtext);
     }
 
     .svc.active{
@@ -136,9 +140,24 @@
         gap:10px;
     }
 
+    .post-phases{
+        margin-top:12px;
+        border:1px solid var(--border);
+        padding:12px;
+        border-radius:10px;
+        background:#fff;
+    }
+
+    .post-phases h3{
+        margin:0 0 10px;
+        font-size:15px;
+        font-weight:800;
+        color:var(--brand-dark);
+    }
+
     .result{
         margin-top:16px;
-        background:#fff7f7;
+        background:#EAF6FE;
         padding:16px;
         border-radius:10px;
         border:1px solid var(--border);
@@ -149,6 +168,7 @@
         justify-content:space-between;
         padding:6px 0;
         font-size:15px;
+        font-weight:700;
     }
 
     .actions{
@@ -163,12 +183,12 @@
         border-radius:10px;
         border:none;
         cursor:pointer;
-        font-weight:700;
+        font-weight:800;
         font-size:15px;
     }
 
     .primary{ background:var(--brand); color:#fff; }
-    .ghost{ background:#fff; border:1px solid var(--border); }
+    .ghost{ background:#fff;border:1px solid var(--border); color:var(--subtext);}
 </style>
 </head>
 
@@ -177,15 +197,18 @@
 
     <div class="logo">
         <div class="logo-icon">MPC</div>
-        <h1>Calculadora — Arizona</h1>
+        <h1>Calculadora de Servicios</h1>
     </div>
 
-    <div class="card">
+    <div class="card" id="calculator">
+        
+        <!-- TABS -->
         <div class="tabs">
             <div class="tab active" data-mode="sqft">Por SQFT</div>
             <div class="tab" data-mode="hour">Por Hora</div>
         </div>
 
+        <!-- SERVICE SELECT -->
         <label>Servicio</label>
         <div class="service-row" id="services">
             <div class="svc active" data-service="regular">Regular</div>
@@ -196,7 +219,7 @@
         </div>
 
         <!-- SQFT MODE -->
-        <div id="sqftMode">
+        <div id="mode-sqft" style="margin-top:12px">
             <label>Sqft</label>
             <input id="sqft" type="number" value="1500">
 
@@ -206,10 +229,57 @@
                 <input id="sqft_deep" type="number" step="0.01" value="0.20">
                 <input id="sqft_power" type="number" step="0.01" value="0.20">
             </div>
+
+            <!-- POST ONE-TIME -->
+            <div id="post-one" class="post-phases" style="display:none;">
+                <h3>Post-Construction (One-Time)</h3>
+                <div class="grid-3">
+                    <div>
+                        <label>One-time</label>
+                        <input id="p1_onetime" type="number" step="0.01" value="0.50">
+                    </div>
+                    <div>
+                        <label>Windows</label>
+                        <input id="p1_windows" type="number" step="0.01" value="0.20">
+                    </div>
+                    <div>
+                        <label>Patio</label>
+                        <input id="p1_patio" type="number" step="0.01" value="0.10">
+                    </div>
+                </div>
+            </div>
+
+            <!-- POST MULTI-PHASE -->
+            <div id="post-multi" class="post-phases" style="display:none;">
+                <h3>Post-Construction (Multi-Phase)</h3>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+                    <div>
+                        <label>Rough</label>
+                        <input id="pm_rough" type="number" step="0.01" value="0.30">
+                    </div>
+                    <div>
+                        <label>Final</label>
+                        <input id="pm_final" type="number" step="0.01" value="0.40">
+                    </div>
+                    <div>
+                        <label>Refresh</label>
+                        <input id="pm_refresh" type="number" step="0.01" value="0.18">
+                    </div>
+                    <div>
+                        <label>Windows</label>
+                        <input id="pm_windows" type="number" step="0.01" value="0.20">
+                    </div>
+                    <div>
+                        <label>Patio</label>
+                        <input id="pm_patio" type="number" step="0.01" value="0.10">
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- HOUR MODE -->
-        <div id="hourMode" style="display:none;">
+        <!-- HOURLY MODE -->
+        <div id="mode-hour" style="display:none;margin-top:12px">
             <label>Horas</label>
             <input id="hours" type="number">
 
@@ -224,109 +294,173 @@
             </div>
         </div>
 
+        <!-- RESULT -->
         <div class="result">
             <div class="row"><div>Servicio</div><div id="r_service">Regular</div></div>
-            <div class="row"><div>Detalle</div><div id="r_detail">1500 sqft</div></div>
+            <div class="row"><div>Detalle</div><div id="r_detail">—</div></div>
             <div class="row"><div>Precio</div><div id="r_price">$0.00</div></div>
-            <div class="row"><div>Total</div><div id="r_total">$0.00</div></div>
+            <div class="row" style="font-size:17px"><div>Total</div><div id="r_total">$0.00</div></div>
         </div>
 
+        <!-- BUTTONS -->
         <div class="actions">
-            <button class="btn primary" id="copyBtn">Copiar</button>
-            <button class="btn ghost" id="clearBtn">Limpiar</button>
+            <button class="btn primary" id="copy">Copiar</button>
+            <button class="btn ghost" id="clear">Limpiar</button>
         </div>
+
     </div>
 </div>
 
 <script>
 let activeService = "regular";
 
+// DOM
 const tabs = document.querySelectorAll(".tab");
-const sqftMode = document.getElementById("sqftMode");
-const hourMode = document.getElementById("hourMode");
+const modeSqft = document.getElementById("mode-sqft");
+const modeHour = document.getElementById("mode-hour");
 
-tabs.forEach(t => {
-    t.addEventListener("click", () => {
-        tabs.forEach(x => x.classList.remove("active"));
-        t.classList.add("active");
+const svcEls = document.querySelectorAll(".svc");
 
-        const mode = t.dataset.mode;
-        sqftMode.style.display = mode === "sqft" ? "block" : "none";
-        hourMode.style.display = mode === "hour" ? "block" : "none";
+// Inputs
+const sqft = document.getElementById("sqft");
+const sqft_regular = document.getElementById("sqft_regular");
+const sqft_deep = document.getElementById("sqft_deep");
+const sqft_power = document.getElementById("sqft_power");
 
-        calculate();
-    });
-});
+// Post One-Time
+const p1_onetime = document.getElementById("p1_onetime");
+const p1_windows = document.getElementById("p1_windows");
+const p1_patio = document.getElementById("p1_patio");
 
-const svcButtons = document.querySelectorAll(".svc");
-svcButtons.forEach(b => {
-    b.addEventListener("click", () => {
-        svcButtons.forEach(x => x.classList.remove("active"));
-        b.classList.add("active");
-        activeService = b.dataset.service;
-        calculate();
-    });
-});
+// Post Multi
+const pm_rough = document.getElementById("pm_rough");
+const pm_final = document.getElementById("pm_final");
+const pm_refresh = document.getElementById("pm_refresh");
+const pm_windows = document.getElementById("pm_windows");
+const pm_patio = document.getElementById("pm_patio");
 
+const postOneBlock = document.getElementById("post-one");
+const postMultiBlock = document.getElementById("post-multi");
+
+// Hourly
+const hours = document.getElementById("hours");
+const techs = document.getElementById("techs");
+const hr_regular = document.getElementById("hr_regular");
+const hr_deep = document.getElementById("hr_deep");
+const hr_post = document.getElementById("hr_post");
+
+// Results
+const r_service = document.getElementById("r_service");
+const r_detail = document.getElementById("r_detail");
+const r_price = document.getElementById("r_price");
+const r_total = document.getElementById("r_total");
+
+// Formatting
 function money(v){
-    return "$" + Number(v).toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2});
+    return "$" + Number(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
+// Tabs
+tabs.forEach(tab=>{
+    tab.addEventListener("click", ()=>{
+        tabs.forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        const mode = tab.dataset.mode;
+        modeSqft.style.display = mode==="sqft" ? "block" : "none";
+        modeHour.style.display = mode==="hour" ? "block" : "none";
+
+        calculate();
+    });
+});
+
+// Service buttons
+svcEls.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+        svcEls.forEach(s=>s.classList.remove("active"));
+        btn.classList.add("active");
+        activeService = btn.dataset.service;
+
+        postOneBlock.style.display = activeService==="post1" ? "block" : "none";
+        postMultiBlock.style.display = activeService==="postMulti" ? "block" : "none";
+
+        calculate();
+    });
+});
+
+// CALC
 function calculate(){
     const mode = document.querySelector(".tab.active").dataset.mode;
+    const s = Number(sqft.value)||0;
 
-    document.getElementById("r_service").textContent =
-        activeService === "regular" ? "Regular" :
-        activeService === "deep" ? "Profunda" :
-        activeService === "post1" ? "Post One-Time" :
-        activeService === "postMulti" ? "Post Multi-Phase" :
-        activeService === "power" ? "Power Washing" : "";
+    r_service.textContent =
+        activeService==="regular" ? "Regular" :
+        activeService==="deep" ? "Profunda" :
+        activeService==="post1" ? "Post (One-Time)" :
+        activeService==="postMulti" ? "Post (Multi-Phase)" :
+        activeService==="power" ? "Power Wash" : "";
 
-    if(mode === "sqft"){
-        const s = Number(document.getElementById("sqft").value) || 0;
+    if(mode==="sqft"){
+        r_detail.textContent = `${s} sqft`;
+
         let price = 0;
 
-        if(activeService === "regular") price = Number(sqft_regular.value);
-        if(activeService === "deep") price = Number(sqft_deep.value);
-        if(activeService === "power") price = Number(sqft_power.value);
-        if(activeService === "post1") price = 0.80;
-        if(activeService === "postMulti") price = 0.88;
+        if(activeService==="regular") price = Number(sqft_regular.value);
+        if(activeService==="deep") price = Number(sqft_deep.value);
+        if(activeService==="power") price = Number(sqft_power.value);
 
-        document.getElementById("r_detail").textContent = s + " sqft";
-        document.getElementById("r_price").textContent = money(price) + "/sqft";
-        document.getElementById("r_total").textContent = money(price * s);
+        if(activeService==="post1"){
+            price =
+                Number(p1_onetime.value) +
+                Number(p1_windows.value) +
+                Number(p1_patio.value);
+        }
+
+        if(activeService==="postMulti"){
+            price =
+                Number(pm_rough.value) +
+                Number(pm_final.value) +
+                Number(pm_refresh.value) +
+                Number(pm_windows.value) +
+                Number(pm_patio.value);
+        }
+
+        r_price.textContent = money(price) + " /sqft";
+        r_total.textContent = money(price * s);
     }
     else {
-        const h = Number(hours.value) || 0;
-        const t = Number(techs.value) || 1;
-        let rate = 0;
+        const h = Number(hours.value)||0;
+        const t = Number(techs.value)||1;
 
-        if(activeService === "regular") rate = Number(hr_regular.value);
-        if(activeService === "deep") rate = Number(hr_deep.value);
-        if(activeService === "post1" || activeService === "postMulti") rate = Number(hr_post.value);
-        if(activeService === "power") rate = Number(hr_deep.value);
+        let rate = 0;
+        if(activeService==="regular") rate = Number(hr_regular.value);
+        if(activeService==="deep") rate = Number(hr_deep.value);
+        if(activeService==="post1" || activeService==="postMulti") rate = Number(hr_post.value);
+        if(activeService==="power") rate = Number(hr_deep.value);
 
         const total = h * t * rate;
-
-        document.getElementById("r_detail").textContent =
-            `${h} h × ${t} tech(s)`;
-        document.getElementById("r_price").textContent = money(rate) + "/hr";
-        document.getElementById("r_total").textContent = money(total);
+        r_detail.textContent = `${h} h × ${t} técnicos`;
+        r_price.textContent = money(rate) + "/hr";
+        r_total.textContent = money(total);
     }
 }
 
-document.getElementById("copyBtn").addEventListener("click", () => {
-    const text =
+// Inputs listener
+document.querySelectorAll("input").forEach(i=> i.addEventListener("input", calculate));
+
+// Buttons
+document.getElementById("copy").addEventListener("click", ()=>{
+    const txt =
 `Servicio: ${r_service.textContent}
 Detalle: ${r_detail.textContent}
 Precio: ${r_price.textContent}
 Total: ${r_total.textContent}`;
 
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(txt);
     alert("Copiado");
 });
 
-document.getElementById("clearBtn").addEventListener("click", () => {
+document.getElementById("clear").addEventListener("click", ()=>{
     sqft.value = "";
     hours.value = "";
     techs.value = 1;
@@ -335,5 +469,6 @@ document.getElementById("clearBtn").addEventListener("click", () => {
 
 calculate();
 </script>
+
 </body>
 </html>
